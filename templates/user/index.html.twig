@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<table>
+<thead>
+<tr><th>Фото</th><th>Фамилия</th><th>Имя</th><th>Возраст</th><th>Статус</th><th>Почта</th><th>Телеграмм</th><th>Адрес</th><th>Отдел</th></tr>
+</thead>
+<tbody>
+{% for user in users %}
+<thead>
+<tr>
+<td>
+<img src="{{ asset(user.image)}}" >
+</td>
+<td>{{user.lastName}}</td>
+<td>{{user.firstName}}</td>
+<td>{{user.age}}</td>
+<td>{{user.status}}</td>
+<td>{{user.email}}</td>
+<td>{{user.telegram}}</td>
+<td>{{user.address}}</td> 
+<td>{{ user.department.name }}</td>
+ <td><a href="{{ path('edit_user', {user: user.id})}}">Изменить</a></td>
+ <td>
+    <form method="POST" action="{{ path('delete_user', {'user': user.id}) }}">
+        <input type="hidden" name="_method" value="DELETE">
+        <button>Удалить</button>
+    </form>
+    </td>
+   
+</thead>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<td>
+    <form method="GET" action="{{ path('app_user') }}">
+    <input type="text" placeholder="Поиск" name="search">
+     <select name="department">
+        <option value="0">Все</option>
+        {% for i in department %}
+            <option value="{{ i.id }}">{{ i.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit">
+</form>
+</td>
+{% endblock %}
